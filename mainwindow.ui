@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1410</width>
-    <height>1576</height>
+    <width>1412</width>
+    <height>812</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -37,13 +37,13 @@
    <string>Генератор пакетов</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>8</y>
       <width>861</width>
-      <height>731</height>
+      <height>741</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_Queue">
@@ -146,13 +146,13 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>880</x>
       <y>8</y>
       <width>521</width>
-      <height>731</height>
+      <height>741</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_Type_Fields">
@@ -164,7 +164,10 @@
       </widget>
      </item>
      <item>
-      <widget class="QTabWidget" name="tabWidget">
+      <widget class="QTabWidget" name="tabWidget_setPacket">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
@@ -172,56 +175,56 @@
         <attribute name="title">
          <string>TCP</string>
         </attribute>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
            <y>10</y>
            <width>501</width>
-           <height>621</height>
+           <height>671</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_FieldsTCP">
-          <item row="13" column="0">
-           <widget class="QLabel" name="label_14">
+          <item row="12" column="1">
+           <widget class="QLineEdit" name="lineEdit_paddingTCP"/>
+          </item>
+          <item row="6" column="2">
+           <widget class="QCheckBox" name="checkBox_autoReservedTCP">
             <property name="text">
-             <string>Данные</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             <string>Авто</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="label_12">
+          <item row="9" column="2">
+           <widget class="QCheckBox" name="checkBox_autoChcksumTCP">
             <property name="text">
-             <string>Указатель на срочные данные</string>
+             <string>Авто</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QLineEdit" name="lineEdit_dataOffsetTCP"/>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="lineEdit_reservedTCP"/>
-          </item>
-          <item row="10" column="1">
-           <widget class="QLineEdit" name="lineEdit_urgentPointerTCP"/>
-          </item>
-          <item row="8" column="1">
-           <widget class="QLineEdit" name="lineEdit_windowSizeTCP"/>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Флаги</string>
-            </property>
-           </widget>
-          </item>
-          <item row="14" column="1" colspan="2">
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item row="14" column="0" colspan="3">
+           <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
-             <spacer name="horizontalSpacer_3">
+             <widget class="QPushButton" name="pushButton_deletePacketTCP">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Удалить пакет</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -234,21 +237,59 @@
              </spacer>
             </item>
             <item>
+             <widget class="QPushButton" name="pushButton_sendPacketTCP">
+              <property name="text">
+               <string>Отправить пакет</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="pushButton_saveTCP">
               <property name="text">
-               <string>Сохранить</string>
+               <string>Сохранить пакет</string>
               </property>
              </widget>
             </item>
            </layout>
           </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="lineEdit_ackTCP"/>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="lineEdit_seqTCP"/>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="lineEdit_reservedTCP"/>
+          </item>
+          <item row="13" column="1">
+           <widget class="QTextEdit" name="textEdit_dataTCP"/>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="lineEdit_windowSizeTCP"/>
+          </item>
+          <item row="10" column="1">
+           <widget class="QLineEdit" name="lineEdit_urgentPointerTCP"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_srcPortTCP"/>
+          </item>
+          <item row="15" column="1" colspan="2">
+           <layout class="QHBoxLayout" name="horizontalLayout_2"/>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label">
             <property name="text">
              <string>Порт отправителя</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QCheckBox" name="checkBox_autoDataOffsetTCP">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Авто</string>
             </property>
            </widget>
           </item>
@@ -259,15 +300,25 @@
             </property>
            </widget>
           </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Порт получателя</string>
+            </property>
+           </widget>
+          </item>
           <item row="9" column="1">
            <widget class="QLineEdit" name="lineEdit_chksumTCP"/>
           </item>
-          <item row="6" column="2">
-           <widget class="QCheckBox" name="checkBox_autoReservedTCP">
+          <item row="12" column="0">
+           <widget class="QLabel" name="label_15">
             <property name="text">
-             <string>Авто</string>
+             <string>Заполнение</string>
             </property>
            </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="lineEdit_dataOffsetTCP"/>
           </item>
           <item row="7" column="1">
            <layout class="QGridLayout" name="gridLayout_Flags">
@@ -315,16 +366,10 @@
             </item>
            </layout>
           </item>
-          <item row="5" column="2">
-           <widget class="QCheckBox" name="checkBox_autoDataOffsetTCP">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_9">
             <property name="text">
-             <string>Авто</string>
+             <string>Контрольная сумма</string>
             </property>
            </widget>
           </item>
@@ -335,62 +380,8 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Порт получателя</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="1">
-           <widget class="QTextEdit" name="textEdit_optionsTCP"/>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="lineEdit_seqTCP"/>
-          </item>
           <item row="2" column="1">
            <widget class="QLineEdit" name="lineEdit_dstPortTCP"/>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>Размер окна</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>SEQ</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>ACK</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="label_9">
-            <property name="text">
-             <string>Контрольная сумма</string>
-            </property>
-           </widget>
-          </item>
-          <item row="13" column="1">
-           <widget class="QTextEdit" name="textEdit_dataTCP"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_srcPortTCP"/>
-          </item>
-          <item row="9" column="2">
-           <widget class="QCheckBox" name="checkBox_autoChcksumTCP">
-            <property name="text">
-             <string>Авто</string>
-            </property>
-           </widget>
           </item>
           <item row="11" column="0">
            <widget class="QLabel" name="label_13">
@@ -408,13 +399,6 @@
             </property>
            </widget>
           </item>
-          <item row="12" column="0">
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>Заполнение</string>
-            </property>
-           </widget>
-          </item>
           <item row="12" column="2">
            <widget class="QCheckBox" name="checkBox_autoPaddingTCP">
             <property name="text">
@@ -422,8 +406,56 @@
             </property>
            </widget>
           </item>
-          <item row="12" column="1">
-           <widget class="QLineEdit" name="lineEdit_paddingTCP"/>
+          <item row="11" column="1">
+           <widget class="QTextEdit" name="textEdit_optionsTCP"/>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Данные</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>ACK</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Флаги</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="lineEdit_ackTCP"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>SEQ</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Указатель на срочные данные</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>Размер окна</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -445,49 +477,6 @@
        </widget>
       </widget>
      </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_deletePacket">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Удалить пакет</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_sendPacket">
-         <property name="text">
-          <string>Отправить пакет</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
     </layout>
    </widget>
   </widget>
@@ -496,7 +485,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1410</width>
+     <width>1412</width>
      <height>26</height>
     </rect>
    </property>

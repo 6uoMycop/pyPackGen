@@ -1,1 +1,2 @@
 pyside2-uic mainwindow.ui -o ui_mainwindow.py
+pyside2-uic dialog.ui -o ui_dialog.py

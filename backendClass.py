@@ -20,13 +20,30 @@ class backendClass:
     def getNumberOfPackets(self):
         return len(self.listPackets)
 
-    #def createPacket(self):
-        #self.qPackets.put(TCP)
-        #packet = TCP()
+    def createTCP(self):
+        packet = TCP()
+        self.listPackets.append(TCP)
+        return packet
 
     def getInterfaces(self):
         rawInterfaces = get_windows_if_list()
+        #print(rawInterfaces)
         listInterfaces = list()
         for item in rawInterfaces:
             listInterfaces.append(item)
         return listInterfaces
+
+    def getType(self, packet):
+        return '-'
+
+    def getSrcAddr(self, packet):
+        return '-'
+
+    def getDstAddr(self, packet):
+        return '-'
+
+    def getSrcPort(self, packet):
+        return '-'
+
+    def getDstPort(self, packet):
+        return '-'
