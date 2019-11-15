@@ -7,14 +7,16 @@ from ui_mainwindow import Ui_MainWindow
 from ui_dialog import Ui_Dialog
 from backendClass import *
 
+
 class DialogWindow(QtWidgets.QDialog):
-    def __init__(self, listInterfaces):
+    def __init__(self, backend):
         super(DialogWindow, self).__init__()
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        self.listIfaces = listInterfaces
+        self.listInterfaces = backend.getInterfaces()
+        self.backend = backend
 
-        for item in listInterfaces:
+        for item in self.listInterfaces:
             tmp = item.get('name') + ' // ' + item.get('mac')
             self.ui.comboBox_interfaces.addItem(tmp)
 
@@ -23,16 +25,18 @@ class DialogWindow(QtWidgets.QDialog):
 
     def saveExit(self):
         self.setResult(self.ui.comboBox_interfaces.currentIndex())
-        global g_currentInterface
-        g_currentInterface = self.ui.comboBox_interfaces.currentIndex()
-        if g_currentInterface == -1:
+        self.backend.currentInterface.index     = self.ui.comboBox_interfaces.currentIndex()
+        print(': ' + str(self.backend.currentInterface.index))
+        if self.backend.currentInterface.index == -1:
             self.ui.label_currentInterface.setText("Не выбран")
         else:
-            self.ui.label_currentInterface.setText(self.listIfaces[g_currentInterface].get('name') + ' // ' + self.listIfaces[g_currentInterface].get('mac'))
+            self.backend.currentInterface.interface = self.listInterfaces[self.ui.comboBox_interfaces.currentIndex()]
+            self.ui.label_currentInterface.setText(self.backend.currentInterface.interface.get('name') + ' // ' + self.backend.currentInterface.interface.get('mac'))
         self.accept()
 
     def cancelExit(self):
         self.reject()
+
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -48,7 +52,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(4, QtWidgets.QHeaderView.ResizeToContents)
 
         self.backend = backendClass()
-        self.dialogInterface = DialogWindow(self.backend.getInterfaces())
+        self.dialogInterface = DialogWindow(self.backend)
 
 
         self.ui.actionSetInterface.triggered.connect(self.showInterfaceDialog)
@@ -58,6 +62,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.pushButton_saveTCP.clicked.connect(self.saveTCP)
 
 
+        self.ui.pushButton_sendAll.clicked.connect(self.sendAllPackets)
 
 
     def addPacket(self):
@@ -65,18 +70,56 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.tableWidget_PacketsQueue.insertRow(self.backend.getNumberOfPackets())
 
     def saveTCP(self):
-        newPacket = self.backend.createTCP()
+        if(self.ui.checkBox_autoDataOffsetTCP.isChecked()):
+            offset = 0 # TODO
+        else:
+            offset = self.ui.lineEdit_dataOffsetTCP.text()
 
-        self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 0, QtWidgets.QTableWidgetItem(self.backend.getType   (newPacket))) # type
-        self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 1, QtWidgets.QTableWidgetItem(self.backend.getSrcAddr(newPacket))) # source address
-        self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 2, QtWidgets.QTableWidgetItem(self.backend.getDstAddr(newPacket))) # remote address
-        self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 3, QtWidgets.QTableWidgetItem(self.backend.getSrcPort(newPacket))) # source port
-        self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 4, QtWidgets.QTableWidgetItem(self.backend.getDstPort(newPacket))) # remote port
+        if(self.ui.checkBox_autoReservedTCP.isChecked()):
+            reserved = 0 # TODO
+        else:
+            reserved = self.ui.lineEdit_reservedTCP.text()
 
+        if(self.ui.checkBox_autoChecksumTCP.isChecked()):
+            checksum = None # check it
+        else:
+            checksum = self.ui.lineEdit_checksumTCP.text()
+        try:
+            newPacket = self.backend.createTCP(
+                self.ui.lineEdit_srcPortTCP.text(),
+                self.ui.lineEdit_dstPortTCP.text(),
+                self.ui.lineEdit_seqTCP.text(),
+                self.ui.lineEdit_ackTCP.text(),
+                offset,
+                reserved,
+                self.ui.checkBox_urgTCP.isChecked(),
+                self.ui.checkBox_ackTCP.isChecked(),
+                self.ui.checkBox_pshTCP.isChecked(),
+                self.ui.checkBox_rstTCP.isChecked(),
+                self.ui.checkBox_synTCP.isChecked(),
+                self.ui.checkBox_finTCP.isChecked(),
+                self.ui.lineEdit_windowSizeTCP.text(),
+                checksum,
+                self.ui.lineEdit_urgentPointerTCP.text(),
+                self.ui.plainTextEdit_optionsTCP.toPlainText(),
+                self.ui.plainTextEdit_dataTCP.toPlainText()
+            )
+
+
+            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 0, QtWidgets.QTableWidgetItem(self.backend.getType   (newPacket))) # type
+            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 1, QtWidgets.QTableWidgetItem(self.backend.getSrcAddr(newPacket))) # source address
+            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 2, QtWidgets.QTableWidgetItem(self.backend.getDstAddr(newPacket))) # remote address
+            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 3, QtWidgets.QTableWidgetItem(self.backend.getSrcPort(newPacket))) # source port
+            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 4, QtWidgets.QTableWidgetItem(self.backend.getDstPort(newPacket))) # remote port
+
+        except MyPacketError as e:
+           self.ui.statusbar.showMessage('Внимание! ' + e.message + ' Пакет не был сохранен.')
 
     def showInterfaceDialog(self):
         self.dialogInterface.exec_()
 
+    def sendAllPackets(self):
+        self.backend.sendAll(self.ui.statusbar)
 
 
 

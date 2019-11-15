@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'dialog.ui',
 # licensing of 'dialog.ui' applies.
 #
-# Created: Wed Nov 13 16:22:21 2019
+# Created: Fri Nov 15 12:12:42 2019
 #      by: pyside2-uic  running on PySide2 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
