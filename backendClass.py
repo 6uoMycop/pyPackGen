@@ -8,7 +8,7 @@ from scapy.all import *
 from scapy.arch.windows import show_interfaces
 from scapy.layers.inet6 import IPv6
 from scapy.dadict import DADict
-#from getmac import get_mac_address
+from getmac import get_mac_address
 
 
 class MyPacketError(RuntimeError):
@@ -20,6 +20,25 @@ class interfaceClass:
     def __init__(self):
         self.index = -1
         self.interface = None
+
+#class packetClass:
+#    def __init__(self):
+#        self.type = None
+#        self.raw = None
+#    def __init__(self, type, raw, incapsulated=None):
+#        self.type = type
+#        self.raw = raw
+#        if type == 'IP':
+#            self.underLayerPacket = incapsulated
+#            #TODO: add fields
+#        elif type == 'TCP':
+#            #TODO: add fields
+#            self.srcPort =
+#        #elif type == 'UDP':
+#        #    #TODO: add fields
+#        #elif type == 'ICMP':
+#        #    #TODO: add fields
+
 
 class backendClass:
     def __init__(self):
@@ -44,7 +63,7 @@ class backendClass:
         print("syn:      " + str(syn))
         print("fin:      " + str(fin))
         print("window:   " + window)
-        print("checksum: " + checksum)
+        print("checksum: " + str(checksum))
         print("urg ptr:  " + urgPtr)
         print("options:  " + options)
         print("data:     " + data)
@@ -77,27 +96,32 @@ class backendClass:
             raise MyPacketError('Не указана контрольная сумма.')
         if urgPtr == '':
             raise MyPacketError('Не указан указатель на срочные данные.')
-        if options == '':
-            raise MyPacketError('Не указаны опции.')
-        if data == '':
-            raise MyPacketError('Не указаны данные.')
+        #if options == '':
+        #    raise MyPacketError('Не указаны опции.')
+        #if data == '':
+        #    raise MyPacketError('Не указаны данные.')
 
-        packet = TCP(
-            sport=int(srcPort),
-            dport=int(dstPort),
-            seq=int(seqNum),
-            ack=int(ackNum),
-            dataofs=offset,
-            reserved=reserved,
-            flags=flagsTCP,
-            window=int(window),
-            chksum=checksum,
-            urgptr=int(urgPtr),
-            options=[(op, v)]     #
-        ) / pl
+        try:
+            packet = TCP(
+                sport=int(srcPort),
+                dport=int(dstPort),
+                seq=int(seqNum),
+                ack=int(ackNum),
+                dataofs=offset,
+                reserved=reserved,
+                flags=flagsTCP,
+                window=int(window),
+                chksum=checksum,
+                urgptr=int(urgPtr),
+                options=None #[(op, v)]     #
+            ) / data
+        except:
+            raise MyPacketError('Ошибка при создании пакета.')
+            return None
 
-        self.listPackets.append(TCP)
+        self.listPackets.append(packet)
 
+        #print(packet)
 
         return packet
 
@@ -105,21 +129,53 @@ class backendClass:
         return self.rawInterfaces
 
     def getType(self, packet):
-        return '-'
+        if packet.haslayer(ICMP):
+            return 'ICMP'
+        if packet.haslayer(IP):
+            return 'IP'
+        if packet.haslayer(TCP):
+            return 'TCP'
+        if packet.haslayer(UDP):
+            return 'UDP'
+        raise MyPacketError('Ошибка при получении типа пакета.')
+        return None
 
     def getSrcAddr(self, packet):
-        return '-'
+        if packet.haslayer(IP):
+            return packet.getlayer(IP).src
+        else:
+            print('No IP layer')
+            return None
 
     def getDstAddr(self, packet):
-        return '-'
+        if packet.haslayer(IP):
+            return packet.getlayer(IP).dst
+        else:
+            print('No IP layer')
+            return None
 
     def getSrcPort(self, packet):
-        return '-'
+        if packet.haslayer(TCP):
+            print(packet.getlayer(TCP).sport)
+            return packet.getlayer(TCP).sport
+        elif packet.haslayer(UDP):
+            return packet.getlayer(UDP).sport
+        else:
+            print('No TCP or UDP layer')
+            return None
 
     def getDstPort(self, packet):
-        return '-'
+        if packet.haslayer(TCP):
+            print(packet.getlayer(TCP).dport)
+            return packet.getlayer(TCP).dport
+        elif packet.haslayer(UDP):
+            return packet.getlayer(UDP).dport
+        else:
+            print('No TCP or UDP layer')
+            return None
 
-
+    def autoMAC(self, ipAddr):
+        return get_mac_address(src=ipAddr)
 
 
     def sendAll(self, statusbar):

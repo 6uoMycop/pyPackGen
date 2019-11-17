@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'mainwindow.ui',
 # licensing of 'mainwindow.ui' applies.
 #
-# Created: Fri Nov 15 15:29:06 2019
+# Created: Sun Nov 17 02:56:42 2019
 #      by: pyside2-uic  running on PySide2 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -42,7 +42,10 @@ class Ui_MainWindow(object):
         font.setPointSize(8)
         self.tableWidget_PacketsQueue.setFont(font)
         self.tableWidget_PacketsQueue.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.tableWidget_PacketsQueue.setEditTriggers(QtWidgets.QAbstractItemView.DoubleClicked)
+        self.tableWidget_PacketsQueue.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget_PacketsQueue.setTabKeyNavigation(False)
+        self.tableWidget_PacketsQueue.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.tableWidget_PacketsQueue.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         self.tableWidget_PacketsQueue.setObjectName("tableWidget_PacketsQueue")
         self.tableWidget_PacketsQueue.setColumnCount(5)
         self.tableWidget_PacketsQueue.setRowCount(0)

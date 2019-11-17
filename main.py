@@ -53,10 +53,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.backend = backendClass()
         self.dialogInterface = DialogWindow(self.backend)
-
+        self.packetIndex = -1; # index of current chosen packet which's fields are shown on the right side
 
         self.ui.actionSetInterface.triggered.connect(self.showInterfaceDialog)
         self.ui.pushButton_addPacket.clicked.connect(self.addPacket)
+        self.ui.tableWidget_PacketsQueue.cellDoubleClicked.connect(self.selectPacket)
 
         #TCP
         self.ui.pushButton_saveTCP.clicked.connect(self.saveTCP)
@@ -66,7 +67,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def addPacket(self):
-        self.ui.tabWidget_setPacket.setEnabled(True)
         self.ui.tableWidget_PacketsQueue.insertRow(self.backend.getNumberOfPackets())
 
     def saveTCP(self):
@@ -84,6 +84,7 @@ class MainWindow(QtWidgets.QMainWindow):
             checksum = None # check it
         else:
             checksum = self.ui.lineEdit_checksumTCP.text()
+
         try:
             newPacket = self.backend.createTCP(
                 self.ui.lineEdit_srcPortTCP.text(),
@@ -105,12 +106,11 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.ui.plainTextEdit_dataTCP.toPlainText()
             )
 
-
-            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 0, QtWidgets.QTableWidgetItem(self.backend.getType   (newPacket))) # type
-            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 1, QtWidgets.QTableWidgetItem(self.backend.getSrcAddr(newPacket))) # source address
-            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 2, QtWidgets.QTableWidgetItem(self.backend.getDstAddr(newPacket))) # remote address
-            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 3, QtWidgets.QTableWidgetItem(self.backend.getSrcPort(newPacket))) # source port
-            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 4, QtWidgets.QTableWidgetItem(self.backend.getDstPort(newPacket))) # remote port
+            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 0, QtWidgets.QTableWidgetItem(str(self.backend.getType   (newPacket)))) # type
+            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 1, QtWidgets.QTableWidgetItem(str(self.backend.getSrcAddr(newPacket)))) # source address
+            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 2, QtWidgets.QTableWidgetItem(str(self.backend.getDstAddr(newPacket)))) # remote address
+            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 3, QtWidgets.QTableWidgetItem(str(self.backend.getSrcPort(newPacket)))) # source port
+            self.ui.tableWidget_PacketsQueue.setItem(self.backend.getNumberOfPackets() - 1, 4, QtWidgets.QTableWidgetItem(str(self.backend.getDstPort(newPacket)))) # remote port
 
         except MyPacketError as e:
            self.ui.statusbar.showMessage('Внимание! ' + e.message + ' Пакет не был сохранен.')
@@ -121,6 +121,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def sendAllPackets(self):
         self.backend.sendAll(self.ui.statusbar)
 
+    def selectPacket(self, row, column):
+        self.packetIndex = row
+        self.ui.tabWidget_setPacket.setEnabled(True)
+        #TODO: fill in all fields
 
 
 
