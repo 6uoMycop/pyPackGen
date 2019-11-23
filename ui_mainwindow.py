@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'mainwindow.ui',
 # licensing of 'mainwindow.ui' applies.
 #
-# Created: Fri Nov 22 14:02:03 2019
+# Created: Sat Nov 23 01:06:15 2019
 #      by: pyside2-uic  running on PySide2 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         self.tableWidget_PacketsQueue.setTabKeyNavigation(False)
         self.tableWidget_PacketsQueue.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.tableWidget_PacketsQueue.setObjectName("tableWidget_PacketsQueue")
-        self.tableWidget_PacketsQueue.setColumnCount(5)
+        self.tableWidget_PacketsQueue.setColumnCount(6)
         self.tableWidget_PacketsQueue.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget_PacketsQueue.setHorizontalHeaderItem(0, item)
@@ -58,6 +58,8 @@ class Ui_MainWindow(object):
         self.tableWidget_PacketsQueue.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget_PacketsQueue.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget_PacketsQueue.setHorizontalHeaderItem(5, item)
         self.verticalLayout_Queue.addWidget(self.tableWidget_PacketsQueue)
         self.horizontalLayout_BottomButtons = QtWidgets.QHBoxLayout()
         self.horizontalLayout_BottomButtons.setObjectName("horizontalLayout_BottomButtons")
@@ -709,6 +711,7 @@ class Ui_MainWindow(object):
         self.tableWidget_PacketsQueue.horizontalHeaderItem(2).setText(QtWidgets.QApplication.translate("MainWindow", "Адрес получателя", None, -1))
         self.tableWidget_PacketsQueue.horizontalHeaderItem(3).setText(QtWidgets.QApplication.translate("MainWindow", "Порт отправителя", None, -1))
         self.tableWidget_PacketsQueue.horizontalHeaderItem(4).setText(QtWidgets.QApplication.translate("MainWindow", "Порт получателя", None, -1))
+        self.tableWidget_PacketsQueue.horizontalHeaderItem(5).setText(QtWidgets.QApplication.translate("MainWindow", "EtherType", None, -1))
         self.pushButton_sendAll.setText(QtWidgets.QApplication.translate("MainWindow", "Отправить все пакеты", None, -1))
         self.pushButton_addPacket.setText(QtWidgets.QApplication.translate("MainWindow", "Создать пакет", None, -1))
         self.radioButton_ifDeleteAll.setText(QtWidgets.QApplication.translate("MainWindow", "Удалить все пакеты после отправки", None, -1))

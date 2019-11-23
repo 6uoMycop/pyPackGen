@@ -47,6 +47,7 @@ class packetClass:
                     print('No EtherType')
                 return self.layerIP
             else:
+                print('constructed OK: '+ str(self.layerIP / self.underLayer))
                 return self.layerIP / self.underLayer;
     # ^^^ construct ^^^
 # ^^^ class packetClass ^^^
@@ -162,7 +163,9 @@ class backendClass:
                 window=   int(window),
                 chksum=   N_checksum,
                 urgptr=   N_urgPtr,
-                options=  N_options) / data
+                options=  N_options)
+            if data != '':
+                packet = packet / data
         except:
             raise MyPacketError('Ошибка при создании пакета.')
             return None
@@ -214,7 +217,9 @@ class backendClass:
                 sport=  int(srcPort),
                 dport=  int(dstPort),
                 len=    N_datagramLength,
-                chksum= N_checksum) / data
+                chksum= N_checksum)
+            if data != '':
+                packet = packet / data
         except:
             raise MyPacketError('Ошибка при создании пакета.')
             return None
@@ -267,7 +272,17 @@ class backendClass:
                 code=   int(code),
                 chksum= N_checksum,
                 id=     int(identifier),
-                seq=    int(seq)) / data
+                seq=    int(seq))
+            if data != '':
+                packet = packet / data
+
+            print(
+                'ICMP(type=' + str(type)       +
+                ',code='     + str(code)       +
+                ',chksum='   + str(N_checksum) +
+                ',id='       + str(identifier) +
+                ',seq='      + str(seq)        + ')' +
+                ' / data')
         except:
             raise MyPacketError('Ошибка при создании пакета.')
             return None
@@ -387,7 +402,25 @@ class backendClass:
                 chksum=  N_checksum,
                 src=     srcAddr,
                 dst=     dstAddr,
-                options= N_options) / data
+                options= N_options)
+            if data != '':
+                packet = packet / data
+
+            print(
+                'IP(version=' + str(version         ) +
+                ',ihl='       + str(N_IHL           ) +
+                ',tos='       + str(DSCP            ) +
+                ',len='       + str(N_length        ) +
+                ',id='        + str(ID              ) +
+                ',flags='     + str(N_flags         ) +
+                ',frag='      + str(N_fragmentOffset) +
+                ',ttl='       + str(TTL             ) +
+                ',proto='     + str(protocol        ) +
+                ',chksum='    + str(N_checksum      ) +
+                ',src='       + str(srcAddr         ) +
+                ',dst='       + str(dstAddr         ) +
+                ',options='   + str(N_options       ) + ')' +
+                ' / data')
 
         except MyPacketError as e:
             raise MyPacketError('Ошибка при создании пакета.')
@@ -411,12 +444,15 @@ class backendClass:
         else:
             N_etherType = int(etherType, 16)
 
+        print('--->    EtherType: ' + str(N_etherType))
+
         #add to list
         print(str(index))
         if index == None or index >= len(self.listPackets):
             self.listPackets.append(packetClass(ether=N_etherType))
         else:
-            self.listPackets[index].ether=N_etherType
+            self.listPackets[index].etherType=N_etherType
+
 
         return packet
 
@@ -428,55 +464,66 @@ class backendClass:
     # ^^^ getInterfaces ^^^
 
     def getType(self, packet):
-        if packet.haslayer(ICMP):
-            return 'ICMP'
-        if packet.haslayer(IP):
-            return 'IP'
-        if packet.haslayer(TCP):
-            return 'TCP'
-        if packet.haslayer(UDP):
-            return 'UDP'
-        raise MyPacketError('Ошибка при получении типа пакета.')
+        if packet != None:
+            if packet.haslayer(ICMP):
+                return 'ICMP'
+            if packet.haslayer(IP):
+                return 'IP'
+            if packet.haslayer(TCP):
+                return 'TCP'
+            if packet.haslayer(UDP):
+                return 'UDP'
+            raise MyPacketError('Ошибка при получении типа пакета.')
         return None
     # ^^^ getType ^^^
 
     def getSrcAddr(self, packet):
-        if packet.haslayer(IP):
-            return packet.getlayer(IP).src
-        else:
-            print('No IP layer')
-            return None
+        if packet != None:
+            if packet.haslayer(IP):
+                return packet.getlayer(IP).src
+            else:
+                print('No IP layer')
+        return None
     # ^^^ getSrcAddr ^^^
 
     def getDstAddr(self, packet):
-        if packet.haslayer(IP):
-            return packet.getlayer(IP).dst
-        else:
-            print('No IP layer')
-            return None
+        if packet != None:
+            if packet.haslayer(IP):
+                return packet.getlayer(IP).dst
+            else:
+                print('No IP layer')
+        return None
     # ^^^ getDstAddr ^^^
 
     def getSrcPort(self, packet):
-        if packet.haslayer(TCP):
-            print(packet.getlayer(TCP).sport)
-            return packet.getlayer(TCP).sport
-        elif packet.haslayer(UDP):
-            return packet.getlayer(UDP).sport
-        else:
-            print('No TCP or UDP layer')
-            return None
+        if packet != None:
+            if packet.haslayer(TCP):
+                print(packet.getlayer(TCP).sport)
+                return packet.getlayer(TCP).sport
+            elif packet.haslayer(UDP):
+                return packet.getlayer(UDP).sport
+            else:
+                print('No TCP or UDP layer')
+        return None
     # ^^^ getSrcPort ^^^
 
     def getDstPort(self, packet):
-        if packet.haslayer(TCP):
-            print(packet.getlayer(TCP).dport)
-            return packet.getlayer(TCP).dport
-        elif packet.haslayer(UDP):
-            return packet.getlayer(UDP).dport
-        else:
-            print('No TCP or UDP layer')
-            return None
+        if packet != None:
+            if packet.haslayer(TCP):
+                print(packet.getlayer(TCP).dport)
+                return packet.getlayer(TCP).dport
+            elif packet.haslayer(UDP):
+                return packet.getlayer(UDP).dport
+            else:
+                print('No TCP or UDP layer')
+        return None
     # ^^^ getDstPort ^^^
+
+    def getEtherType(self, packet):
+        if packet != None:
+            return packet.etherType
+        return None
+    # ^^^ getEtherType ^^^
 
     def autoMAC(self, ipAddr):
         return get_mac_address(ip=ipAddr)
@@ -494,10 +541,16 @@ class backendClass:
 
         for item in self.listPackets:
             toSend = Ether(src=self.autoMAC(item.layerIP.src), dst=self.autoMAC(item.layerIP.dst), type=item.etherType) / item.construct()
+
+            print(
+                'Ether(src=' + str(self.autoMAC(item.layerIP.src)) +
+                ',dst='      + str(self.autoMAC(item.layerIP.dst)) +
+                ',type='     + str(item.etherType                ) + ')')
+
             interfaceName = self.currentInterface.interface.get('name')
             print('ifname: ' + interfaceName)
             print('packet: ' + str(ls(toSend)))
-
+            print(str(toSend))
             errCntr = 0
             try:
                 sendp(toSend, iface=interfaceName, count=1)

@@ -105,6 +105,11 @@
          <string>Порт получателя</string>
         </property>
        </column>
+       <column>
+        <property name="text">
+         <string>EtherType</string>
+        </property>
+       </column>
       </widget>
      </item>
      <item>
@@ -182,7 +187,7 @@
         <bool>false</bool>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>3</number>
        </property>
        <widget class="QWidget" name="tab_TCP">
         <attribute name="title">

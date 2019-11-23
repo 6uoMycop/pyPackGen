@@ -6,7 +6,7 @@ from PySide2 import QtWidgets
 from ui_mainwindow import Ui_MainWindow
 from ui_dialog import Ui_Dialog
 from backendClass import *
-
+import pdb
 
 class DialogWindow(QtWidgets.QDialog):
     def __init__(self, backend):
@@ -53,6 +53,7 @@ class MainWindow(QMainWindow):
         self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
         self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeToContents)
         self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(4, QHeaderView.ResizeToContents)
+        self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(5, QHeaderView.ResizeToContents)
 
         self.backend = backendClass()
         self.dialogInterface = DialogWindow(self.backend)
@@ -169,9 +170,9 @@ class MainWindow(QMainWindow):
             if self.ui.comboBox_typeICMP.currentIndex() == 0: # manual
                 type = self.ui.lineEdit_typeICMP.text()
             elif self.ui.comboBox_typeICMP.currentIndex() == 1: # echo-request
-                type = 8
+                type = '8'
             elif self.ui.comboBox_typeICMP.currentIndex() == 2: # echo-reply
-                type = 0
+                type = '0'
             else:
                 raise MyPacketError('Ошибка.')
 
@@ -303,11 +304,12 @@ class MainWindow(QMainWindow):
         packet = self.backend.listPackets[index].construct()
         print('draw ind: ' + str(index))
         print(str(packet))
-        self.ui.tableWidget_PacketsQueue.setItem(index, 0, QTableWidgetItem(str(self.backend.getType   (packet)))) # type
-        self.ui.tableWidget_PacketsQueue.setItem(index, 1, QTableWidgetItem(str(self.backend.getSrcAddr(packet)))) # source address
-        self.ui.tableWidget_PacketsQueue.setItem(index, 2, QTableWidgetItem(str(self.backend.getDstAddr(packet)))) # remote address
-        self.ui.tableWidget_PacketsQueue.setItem(index, 3, QTableWidgetItem(str(self.backend.getSrcPort(packet)))) # source port
-        self.ui.tableWidget_PacketsQueue.setItem(index, 4, QTableWidgetItem(str(self.backend.getDstPort(packet)))) # remote port
+        self.ui.tableWidget_PacketsQueue.setItem(index, 0, QTableWidgetItem(str(self.backend.getType     (packet)))) # type
+        self.ui.tableWidget_PacketsQueue.setItem(index, 1, QTableWidgetItem(str(self.backend.getSrcAddr  (packet)))) # source address
+        self.ui.tableWidget_PacketsQueue.setItem(index, 2, QTableWidgetItem(str(self.backend.getDstAddr  (packet)))) # remote address
+        self.ui.tableWidget_PacketsQueue.setItem(index, 3, QTableWidgetItem(str(self.backend.getSrcPort  (packet)))) # source port
+        self.ui.tableWidget_PacketsQueue.setItem(index, 4, QTableWidgetItem(str(self.backend.getDstPort  (packet)))) # remote port
+        self.ui.tableWidget_PacketsQueue.setItem(index, 5, QTableWidgetItem(str(self.backend.getEtherType(self.backend.listPackets[index])))) # EtherType
     # ^^^ drawPacketInQueue ^^^
 
     def selectPacket(self, row, column):
