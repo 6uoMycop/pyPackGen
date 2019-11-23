@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'mainwindow.ui',
 # licensing of 'mainwindow.ui' applies.
 #
-# Created: Sat Nov 23 21:54:57 2019
+# Created: Sat Nov 23 22:00:36 2019
 #      by: pyside2-uic  running on PySide2 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -822,7 +822,7 @@ class Ui_MainWindow(object):
         self.label_43.setText(QtWidgets.QApplication.translate("MainWindow", "dec", None, -1))
         self.label_51.setText(QtWidgets.QApplication.translate("MainWindow", "hex", None, -1))
         self.label_37.setText(QtWidgets.QApplication.translate("MainWindow", "Смещение фрагмента", None, -1))
-        self.label_15.setText(QtWidgets.QApplication.translate("MainWindow", "hex", None, -1))
+        self.label_15.setText(QtWidgets.QApplication.translate("MainWindow", "\\xNN\\xNN...", None, -1))
         self.tabWidget_setPacket.setTabText(self.tabWidget_setPacket.indexOf(self.tab_IP), QtWidgets.QApplication.translate("MainWindow", "IP", None, -1))
         self.pushButton_saveEthernet.setText(QtWidgets.QApplication.translate("MainWindow", "Сохранить Ethernet", None, -1))
         self.label_81.setText(QtWidgets.QApplication.translate("MainWindow", "hex", None, -1))

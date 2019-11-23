@@ -24,10 +24,15 @@ class interfaceClass:
 # ^^^ class interfaceClass ^^^
 
 class packetClass:
-    def __init__(self, ip = None, under = None, ether = None):
+    def __init__(self, flag = False, ip = None, under = None, ether = None):
         self.layerIP = ip
-        self.underLayer = under
+        self.flagDataIP = flag # signalize if there is IP raw data so we can't add transport layer (otherwise everything will crash)
         self.etherType = ether
+
+        if not self.flagDataIP:
+            self.underLayer = under
+        else:
+            self.underLayer = None
     # ^^^ __init__ ^^^
 
     def construct(self):
@@ -184,7 +189,7 @@ class backendClass:
         #add to list
         if index == None or index >= len(self.listPackets):
             self.listPackets.append(packetClass(under=packet))
-        else:
+        elif not self.listPackets[index].flagDataIP:
             self.listPackets[index].underLayer = packet
 
         return packet
@@ -239,7 +244,7 @@ class backendClass:
         print(str(index))
         if index == None or index >= len(self.listPackets):
             self.listPackets.append(packetClass(under=packet))
-        else:
+        elif not self.listPackets[index].flagDataIP:
             self.listPackets[index].underLayer = packet
 
         return packet
@@ -301,7 +306,7 @@ class backendClass:
         #add to list
         if index == None or index >= len(self.listPackets):
             self.listPackets.append(packetClass(under=packet))
-        else:
+        elif not self.listPackets[index].flagDataIP:
             self.listPackets[index].underLayer = packet
 
         return packet
@@ -396,23 +401,27 @@ class backendClass:
                 chksum=  N_checksum,
                 src=     srcAddr,
                 dst=     dstAddr,
-                options= None #TODO
+                options= IPOption(options)
             )
 
+            if data != '':
+                packet = packet / Raw(load=data)
+
             print(
-                'IP(version=' + str(version         ) +
-                ',ihl='       + str(N_IHL           ) +
-                ',tos='       + str(DSCP            ) +
-                ',len='       + str(N_length        ) +
-                ',id='        + str(ID              ) +
-                ',flags='     + str(N_flags         ) +
-                ',frag='      + str(N_fragmentOffset) +
-                ',ttl='       + str(TTL             ) +
-                ',proto='     + str(protocol        ) +
-                ',chksum='    + str(N_checksum      ) +
-                ',src='       + str(srcAddr         ) +
-                ',dst='       + str(dstAddr         ) + ')' +
-                ' / data')
+                'IP(version='        + str(version         ) +
+                ',ihl='              + str(N_IHL           ) +
+                ',tos='              + str(DSCP            ) +
+                ',len='              + str(N_length        ) +
+                ',id='               + str(ID              ) +
+                ',flags='            + str(N_flags         ) +
+                ',frag='             + str(N_fragmentOffset) +
+                ',ttl='              + str(TTL             ) +
+                ',proto='            + str(protocol        ) +
+                ',chksum='           + str(N_checksum      ) +
+                ',src='              + str(srcAddr         ) +
+                ',dst='              + str(dstAddr         ) +
+                ',options=IPOption(' + str(options         ) + ')' +
+                ' / raw(load=data)')
 
         except MyPacketError as e:
             raise MyPacketError('Ошибка при создании пакета.')
@@ -421,11 +430,11 @@ class backendClass:
         #add to list
         print(str(index))
         if index == None or index >= len(self.listPackets):
-            self.listPackets.append(packetClass(ip=packet, under= None if data == '' else data))
+            self.listPackets.append(packetClass(flag= True if data != '' else False, ip=packet))
         else:
             self.listPackets[index].layerIP = packet
             if(data != ''):
-                self.listPackets[index].underLayer = data
+                self.listPackets[index].underLayer = None
 
         return packet
     # ^^^ createIP ^^^
@@ -444,6 +453,7 @@ class backendClass:
             self.listPackets.append(packetClass(ether=N_etherType))
         else:
             self.listPackets[index].etherType=N_etherType
+
 
 
         return packet

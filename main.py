@@ -51,8 +51,7 @@ class MainWindow(QMainWindow):
 
         for i in range (0, self.ui.tableWidget_PacketsQueue.columnCount()):
             self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(i, QHeaderView.ResizeToContents)
-        for i in range (0, 2):
-            self.ui.tableWidget_optionsIP .horizontalHeader().setSectionResizeMode(i, QHeaderView.ResizeToContents)
+        for i in range (0, self.ui.tableWidget_optionsTCP.columnCount()):
             self.ui.tableWidget_optionsTCP.horizontalHeader().setSectionResizeMode(i, QHeaderView.ResizeToContents)
 
         self.backend = backendClass()
@@ -63,9 +62,7 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_addPacket.clicked.connect(self.addPacket)
         self.ui.tableWidget_PacketsQueue.cellDoubleClicked.connect(self.selectPacket)
 
-        self.ui.pushButton_deleteOptionIP .clicked.connect(self.removeOptionRowIP)
         self.ui.pushButton_deleteOptionTCP.clicked.connect(self.removeOptionRowTCP)
-        self.ui.pushButton_addOptionIP    .clicked.connect(self.addOptionRowIP)
         self.ui.pushButton_addOptionTCP   .clicked.connect(self.addOptionRowTCP)
 
         #TCP
@@ -143,8 +140,7 @@ class MainWindow(QMainWindow):
                 self.ui.lineEdit_windowSizeTCP.text(),
                 checksum,
                 self.ui.lineEdit_urgentPointerTCP.text(),
-                #self.ui.plainTextEdit_optionsTCP.toPlainText(),
-                options, #TODO options
+                options,
                 self.ui.plainTextEdit_dataTCP.toPlainText(),
                 None
                     if self.ui.tableWidget_PacketsQueue.currentRow() == self.backend.getNumberOfPackets()
@@ -175,8 +171,6 @@ class MainWindow(QMainWindow):
                 checksum,
                 self.ui.plainTextEdit_dataUDP.toPlainText(),
                 self.ui.tableWidget_PacketsQueue.currentRow()
-                #None if self.ui.tableWidget_PacketsQueue.currentRow() == self.backend.getNumberOfPackets()
-                #    else self.ui.tableWidget_PacketsQueue.currentRow()
             )
             self.drawPacketInQueue()
         except MyPacketError as e:
@@ -213,8 +207,6 @@ class MainWindow(QMainWindow):
                 self.ui.lineEdit_seqICMP.text(),
                 self.ui.plainTextEdit_dataICMP.toPlainText(),
                 self.ui.tableWidget_PacketsQueue.currentRow()
-                #None if self.ui.tableWidget_PacketsQueue.currentRow() == self.backend.getNumberOfPackets()
-                #    else self.ui.tableWidget_PacketsQueue.currentRow()
             )
             self.drawPacketInQueue()
         except MyPacketError as e:
@@ -281,11 +273,9 @@ class MainWindow(QMainWindow):
                 checksum,
                 self.ui.lineEdit_srcAddrIP.text(),
                 self.ui.lineEdit_dstAddrIP.text(),
-                None, # TODO
+                self.ui.plainTextEdit_optionsIP.toPlainText(),
                 payload,
                 self.ui.tableWidget_PacketsQueue.currentRow()
-                #None if self.ui.tableWidget_PacketsQueue.currentRow() == self.backend.getNumberOfPackets()
-                #    else self.ui.tableWidget_PacketsQueue.currentRow()
             )
             self.drawPacketInQueue()
         except MyPacketError as e:

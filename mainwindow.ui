@@ -1393,7 +1393,7 @@
             <item>
              <widget class="QLabel" name="label_15">
               <property name="text">
-               <string>hex</string>
+               <string>\xNN\xNN...</string>
               </property>
              </widget>
             </item>
