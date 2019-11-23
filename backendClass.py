@@ -41,14 +41,14 @@ class packetClass:
                     print('No EtherType')
                 return self.underLayer
         else:
+            print(str(self.underLayer))
             if self.underLayer == None:
                 print('No transport layer')
                 if self.etherType == None:
                     print('No EtherType')
                 return self.layerIP
             else:
-                print('constructed OK: '+ str(self.layerIP / self.underLayer))
-                return self.layerIP / self.underLayer;
+                return self.layerIP / self.underLayer
     # ^^^ construct ^^^
 # ^^^ class packetClass ^^^
 
@@ -102,13 +102,24 @@ class backendClass:
         print("options:  " + str(options))
         print("data:     " + str(data))
 
+        N_options = []
+        for item in options:
+            if item[0] == 'EOL' or item[0] == 'NOP' or item[0] == 'SAckOK' or item[0] == 'AltChkSumOpt':
+                N_options.append( (item[0], None) )
+            elif item[0] == 'MSS' or item[0] == 'UTO' or item[0] == 'WScale':
+                N_options.append( (item[0], int(item[1])) )
+            elif item[0] == 'Mood':
+                N_options.append( (item[0], item[1]) )
+            elif item[0] == 'SAck' or item[0] == 'Timestamp' or item[0] == 'AltChkSum' or item[0] == 'TFO':
+                N_options.append( (item[0], (int(item[1]),int(item[2])) ) )
+
         N_flagsTCP = 0;
-        N_flagsTCP += 0b00000001 if urg else 0
-        N_flagsTCP += 0b00000010 if ack else 0
-        N_flagsTCP += 0b00000100 if psh else 0
-        N_flagsTCP += 0b00001000 if rst else 0
-        N_flagsTCP += 0b00010000 if syn else 0
-        N_flagsTCP += 0b00100000 if fin else 0
+        N_flagsTCP += 0b00100000 if urg else 0
+        N_flagsTCP += 0b00010000 if ack else 0
+        N_flagsTCP += 0b00001000 if psh else 0
+        N_flagsTCP += 0b00000100 if rst else 0
+        N_flagsTCP += 0b00000010 if syn else 0
+        N_flagsTCP += 0b00000001 if fin else 0
 
         print("flags:    " + str(bin(N_flagsTCP)))
         try:
@@ -147,10 +158,10 @@ class backendClass:
 
             N_urgPtr = int(urgPtr, 16)
 
-            if options == '':
-                N_options = []
-            else:
-                N_options = int(options, 16) ### AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            #if options == '':
+            #    N_options = []
+            #else:
+            #    N_options = int(options, 16) ### AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
             packet = TCP(
                 sport=    int(srcPort),
@@ -313,7 +324,6 @@ class backendClass:
         srcAddr,
         dstAddr,
         options,
-        padding,
         data,
         index=None
     ):
@@ -339,24 +349,9 @@ class backendClass:
                 N_checksum = int(checksum, 16)
 
             N_flags = 0
-            N_flags += 0b001 if reservedFlag      else 0
+            N_flags += 0b100 if reservedFlag      else 0
             N_flags += 0b010 if dontFragmentFlag  else 0
-            N_flags += 0b100 if moreFragmentsFlag else 0
-
-            padLen = 0
-            if options == '':
-                N_options = []
-            else:                                                                  ### AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                padLen = 4 - (4 if len(N_options) % 4 == 0 else len(N_options) % 4)
-                N_padding = ''
-                if padding == '':
-                    for i in range (padLen):
-                        N_padding += '0'
-                else:
-                    if padLen != len(padding):
-                        raise MyPacketError('Неверно указано заполнение.')
-                    N_padding = padding
-                N_options = int(options / N_padding, 16)
+            N_flags += 0b001 if moreFragmentsFlag else 0
 
             if IHL == '':
                 N_IHL = None
@@ -385,7 +380,6 @@ class backendClass:
             print("checksum: " + str(N_checksum))
             print("src:      " + str(srcAddr))
             print("dst:      " + str(dstAddr))
-            print("optionds: " + str(N_options))
 
 
             #construct packet
@@ -402,9 +396,8 @@ class backendClass:
                 chksum=  N_checksum,
                 src=     srcAddr,
                 dst=     dstAddr,
-                options= N_options)
-            if data != '':
-                packet = packet / data
+                options= None #TODO
+            )
 
             print(
                 'IP(version=' + str(version         ) +
@@ -418,8 +411,7 @@ class backendClass:
                 ',proto='     + str(protocol        ) +
                 ',chksum='    + str(N_checksum      ) +
                 ',src='       + str(srcAddr         ) +
-                ',dst='       + str(dstAddr         ) +
-                ',options='   + str(N_options       ) + ')' +
+                ',dst='       + str(dstAddr         ) + ')' +
                 ' / data')
 
         except MyPacketError as e:
@@ -429,7 +421,7 @@ class backendClass:
         #add to list
         print(str(index))
         if index == None or index >= len(self.listPackets):
-            self.listPackets.append(packetClass(layerIP=packet, underLayer=data))
+            self.listPackets.append(packetClass(ip=packet, under= None if data == '' else data))
         else:
             self.listPackets[index].layerIP = packet
             if(data != ''):
@@ -465,10 +457,10 @@ class backendClass:
 
     def getType(self, packet):
         if packet != None:
-            if packet.haslayer(ICMP):
-                return 'ICMP'
             if packet.haslayer(IP):
                 return 'IP'
+            if packet.haslayer(ICMP):
+                return 'ICMP'
             if packet.haslayer(TCP):
                 return 'TCP'
             if packet.haslayer(UDP):

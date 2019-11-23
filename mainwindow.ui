@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1837</width>
-    <height>920</height>
+    <width>1478</width>
+    <height>1301</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -43,7 +43,7 @@
       <x>10</x>
       <y>8</y>
       <width>801</width>
-      <height>831</height>
+      <height>871</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_Queue">
@@ -80,6 +80,9 @@
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectRows</enum>
        </property>
+       <attribute name="horizontalHeaderStretchLastSection">
+        <bool>false</bool>
+       </attribute>
        <column>
         <property name="text">
          <string>Тип пакета</string>
@@ -169,8 +172,8 @@
      <rect>
       <x>820</x>
       <y>8</y>
-      <width>581</width>
-      <height>851</height>
+      <width>651</width>
+      <height>881</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_Type_Fields">
@@ -198,45 +201,36 @@
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>561</width>
-           <height>751</height>
+           <width>631</width>
+           <height>811</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_FieldsTCP">
-          <item row="12" column="2">
-           <widget class="QLineEdit" name="lineEdit_paddingTCP"/>
+          <item row="10" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_12">
+              <property name="text">
+               <string>Указатель на срочные</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_25">
+              <property name="text">
+               <string>данные</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="2" column="2">
-           <widget class="QLineEdit" name="lineEdit_dstPortTCP"/>
-          </item>
-          <item row="12" column="3">
-           <widget class="QCheckBox" name="checkBox_autoPaddingTCP">
-            <property name="text">
-             <string>Авто</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="2">
-           <widget class="QLineEdit" name="lineEdit_reservedTCP"/>
+          <item row="8" column="2">
+           <widget class="QLineEdit" name="lineEdit_windowSizeTCP"/>
           </item>
           <item row="7" column="0">
            <widget class="QLabel" name="label_7">
             <property name="text">
              <string>Флаги</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>SEQ</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="3">
-           <widget class="QCheckBox" name="checkBox_autoChecksumTCP">
-            <property name="text">
-             <string>Авто</string>
             </property>
            </widget>
           </item>
@@ -247,7 +241,58 @@
             </property>
            </widget>
           </item>
-          <item row="13" column="0">
+          <item row="4" column="1">
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>Размер окна</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLineEdit" name="lineEdit_dataOffsetTCP"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Зарезервированное поле</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="3">
+           <widget class="QCheckBox" name="checkBox_autoDataOffsetTCP">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Авто</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0">
            <widget class="QLabel" name="label_14">
             <property name="text">
              <string>Данные</string>
@@ -257,36 +302,24 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="3">
-           <widget class="QCheckBox" name="checkBox_autoReservedTCP">
+          <item row="10" column="1">
+           <widget class="QLabel" name="label_24">
             <property name="text">
-             <string>Авто</string>
+             <string>hex</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
-           <widget class="QLineEdit" name="lineEdit_srcPortTCP"/>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="lineEdit_seqTCP"/>
-          </item>
-          <item row="5" column="2">
-           <widget class="QLineEdit" name="lineEdit_dataOffsetTCP"/>
-          </item>
-          <item row="15" column="2" colspan="2">
-           <layout class="QHBoxLayout" name="horizontalLayout_2"/>
-          </item>
-          <item row="8" column="2">
-           <widget class="QLineEdit" name="lineEdit_windowSizeTCP"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label">
+          <item row="6" column="1">
+           <widget class="QLabel" name="label_21">
             <property name="text">
-             <string>Порт отправки</string>
+             <string>bin</string>
             </property>
            </widget>
           </item>
-          <item row="14" column="0" colspan="4">
+          <item row="13" column="0" colspan="4">
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
              <spacer name="horizontalSpacer_2">
@@ -310,18 +343,74 @@
             </item>
            </layout>
           </item>
-          <item row="12" column="0">
-           <widget class="QLabel" name="label_15">
+          <item row="1" column="2">
+           <widget class="QLineEdit" name="lineEdit_srcPortTCP"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label">
             <property name="text">
-             <string>Заполнение</string>
+             <string>Порт отправки</string>
             </property>
            </widget>
           </item>
-          <item row="11" column="2">
-           <widget class="QPlainTextEdit" name="plainTextEdit_optionsTCP"/>
+          <item row="6" column="2">
+           <widget class="QLineEdit" name="lineEdit_reservedTCP"/>
           </item>
-          <item row="9" column="2">
-           <widget class="QLineEdit" name="lineEdit_checksumTCP"/>
+          <item row="11" column="2">
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0" colspan="3">
+             <widget class="QTableWidget" name="tableWidget_optionsTCP">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;p&gt;EOL ........ | --- | --- |&lt;/p&gt;&lt;p&gt;NOP ........ | --- | --- |&lt;/p&gt;&lt;p&gt;SAckOK ..... | --- | --- |&lt;/p&gt;&lt;p&gt;AltChkSumOpt | --- | --- |&lt;/p&gt;&lt;p&gt;Mood ....... | str | --- |&lt;/p&gt;&lt;p&gt;MSS ........ | int | --- |&lt;/p&gt;&lt;p&gt;UTO ........ | int | --- |&lt;/p&gt;&lt;p&gt;WScale ..... | int | --- |&lt;/p&gt;&lt;p&gt;SAck ....... | int | int |&lt;/p&gt;&lt;p&gt;Timestamp .. | int | int |&lt;/p&gt;&lt;p&gt;AltChkSum .. | int | int |&lt;/p&gt;&lt;p&gt;TFO ........ | int | int |&lt;/p&gt;&lt;/font&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::DoubleClicked</set>
+              </property>
+              <column>
+               <property name="text">
+                <string>Тип</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Значение 1</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Значение 2</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <spacer name="horizontalSpacer_12">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="2">
+             <widget class="QPushButton" name="pushButton_deleteOptionTCP">
+              <property name="text">
+               <string>Удалить</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="pushButton_addOptionTCP">
+              <property name="text">
+               <string>Добавить</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item row="4" column="0">
            <widget class="QLabel" name="label_4">
@@ -330,18 +419,38 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="2">
-           <widget class="QLineEdit" name="lineEdit_ackTCP"/>
-          </item>
-          <item row="13" column="2">
-           <widget class="QPlainTextEdit" name="plainTextEdit_dataTCP"/>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_6">
+          <item row="9" column="1">
+           <widget class="QLabel" name="label_23">
             <property name="text">
-             <string>Зарезервированное поле</string>
+             <string>hex</string>
             </property>
            </widget>
+          </item>
+          <item row="12" column="2">
+           <widget class="QPlainTextEdit" name="plainTextEdit_dataTCP"/>
+          </item>
+          <item row="9" column="2">
+           <widget class="QLineEdit" name="lineEdit_checksumTCP"/>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="lineEdit_dstPortTCP"/>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLabel" name="label_22">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>hex</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="lineEdit_seqTCP"/>
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_2">
@@ -350,26 +459,32 @@
             </property>
            </widget>
           </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="label_12">
+          <item row="6" column="3">
+           <widget class="QCheckBox" name="checkBox_autoReservedTCP">
             <property name="text">
-             <string>Указатель на срочные данные</string>
+             <string>Авто</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>Размер окна</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="label_9">
-            <property name="text">
-             <string>Контрольная сумма</string>
-            </property>
-           </widget>
+          <item row="10" column="2">
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QLineEdit" name="lineEdit_urgentPointerTCP"/>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
           <item row="11" column="0">
            <widget class="QLabel" name="label_13">
@@ -387,21 +502,36 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="3">
-           <widget class="QCheckBox" name="checkBox_autoDataOffsetTCP">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+          <item row="9" column="3">
+           <widget class="QCheckBox" name="checkBox_autoChecksumTCP">
             <property name="text">
              <string>Авто</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="2">
-           <widget class="QLineEdit" name="lineEdit_urgentPointerTCP"/>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Контрольная сумма</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="lineEdit_ackTCP"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>SEQ</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
           </item>
           <item row="7" column="2">
            <layout class="QGridLayout" name="gridLayout_Flags">
@@ -449,86 +579,6 @@
             </item>
            </layout>
           </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_17">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_18">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLabel" name="label_19">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="label_20">
-            <property name="text">
-             <string>hex</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLabel" name="label_21">
-            <property name="text">
-             <string>bin</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QLabel" name="label_22">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="1">
-           <widget class="QLabel" name="label_23">
-            <property name="text">
-             <string>hex</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="1">
-           <widget class="QLabel" name="label_24">
-            <property name="text">
-             <string>hex</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="1">
-           <widget class="QLabel" name="label_25">
-            <property name="text">
-             <string>hex</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="1">
-           <widget class="QLabel" name="label_26">
-            <property name="text">
-             <string>hex</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </widget>
@@ -541,40 +591,13 @@
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>561</width>
-           <height>751</height>
+           <width>631</width>
+           <height>811</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_FieldsUDP">
           <item row="1" column="2">
            <widget class="QLineEdit" name="lineEdit_srcPortUDP"/>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_56">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_96">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="2" colspan="2">
-           <layout class="QHBoxLayout" name="horizontalLayout_8"/>
-          </item>
-          <item row="2" column="2">
-           <widget class="QLineEdit" name="lineEdit_dstPortUDP"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_55">
-            <property name="text">
-             <string>Длина дейтаграммы</string>
-            </property>
-           </widget>
           </item>
           <item row="5" column="0">
            <widget class="QLabel" name="label_86">
@@ -586,8 +609,12 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="2">
-           <widget class="QPlainTextEdit" name="plainTextEdit_dataUDP"/>
+          <item row="3" column="3">
+           <widget class="QCheckBox" name="checkBox_autoLengthUDP">
+            <property name="text">
+             <string>Авто</string>
+            </property>
+           </widget>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_87">
@@ -596,10 +623,48 @@
             </property>
            </widget>
           </item>
+          <item row="5" column="2">
+           <widget class="QPlainTextEdit" name="plainTextEdit_dataUDP"/>
+          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_91">
             <property name="text">
              <string>Порт назначения</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QCheckBox" name="checkBox_autoChecksumUDP">
+            <property name="text">
+             <string>Авто</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="label_56">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="label_58">
+            <property name="text">
+             <string>hex</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_96">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_97">
+            <property name="text">
+             <string>dec</string>
             </property>
            </widget>
           </item>
@@ -629,6 +694,9 @@
             </property>
            </spacer>
           </item>
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="lineEdit_checksumUDP"/>
+          </item>
           <item row="8" column="0" colspan="4">
            <layout class="QHBoxLayout" name="horizontalLayout_9">
             <item>
@@ -653,13 +721,6 @@
             </item>
            </layout>
           </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_97">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="0">
            <widget class="QLabel" name="label_57">
             <property name="text">
@@ -667,32 +728,18 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QLabel" name="label_58">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_55">
             <property name="text">
-             <string>hex</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="3">
-           <widget class="QCheckBox" name="checkBox_autoChecksumUDP">
-            <property name="text">
-             <string>Авто</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QCheckBox" name="checkBox_autoLengthUDP">
-            <property name="text">
-             <string>Авто</string>
+             <string>Длина дейтаграммы</string>
             </property>
            </widget>
           </item>
           <item row="3" column="2">
            <widget class="QLineEdit" name="lineEdit_lengthUDP"/>
           </item>
-          <item row="4" column="2">
-           <widget class="QLineEdit" name="lineEdit_checksumUDP"/>
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="lineEdit_dstPortUDP"/>
           </item>
          </layout>
         </widget>
@@ -706,15 +753,113 @@
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>561</width>
-           <height>751</height>
+           <width>631</width>
+           <height>811</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_FieldsICMP">
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_61">
+          <item row="1" column="2">
+           <widget class="QLineEdit" name="lineEdit_typeICMP"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_67">
             <property name="text">
-             <string>Номер последовательности</string>
+             <string>Код</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="lineEdit_checksumICMP"/>
+          </item>
+          <item row="10" column="0" colspan="4">
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_saveICMP">
+              <property name="text">
+               <string>Сохранить ICMP</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="7" column="2">
+           <widget class="QPlainTextEdit" name="plainTextEdit_dataICMP"/>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLabel" name="label_76">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_60">
+            <property name="text">
+             <string>Контрольная сумма</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="lineEdit_codeICMP"/>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_62">
+            <property name="text">
+             <string>Данные</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_63">
+            <property name="text">
+             <string>Тип</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_72">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLabel" name="label_75">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLineEdit" name="lineEdit_identifierICMP"/>
+          </item>
+          <item row="3" column="3">
+           <widget class="QCheckBox" name="checkBox_autoChecksumICMP">
+            <property name="text">
+             <string>Авто</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_65">
+            <property name="text">
+             <string>Идентификатор</string>
             </property>
            </widget>
           </item>
@@ -755,183 +900,6 @@
             </item>
            </layout>
           </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_73">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_74">
-            <property name="text">
-             <string>hex</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_62">
-            <property name="text">
-             <string>Данные</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QCheckBox" name="checkBox_autoCodeICMP">
-            <property name="text">
-             <string>Авто</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QLineEdit" name="lineEdit_identifierICMP"/>
-          </item>
-          <item row="6" column="2">
-           <widget class="QLineEdit" name="lineEdit_seqICMP"/>
-          </item>
-          <item row="3" column="3">
-           <widget class="QCheckBox" name="checkBox_autoChecksumICMP">
-            <property name="text">
-             <string>Авто</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_67">
-            <property name="text">
-             <string>Код</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="2" colspan="2">
-           <layout class="QHBoxLayout" name="horizontalLayout_6"/>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLineEdit" name="lineEdit_typeICMP"/>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLabel" name="label_76">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_72">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <spacer name="verticalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_60">
-            <property name="text">
-             <string>Контрольная сумма</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <spacer name="verticalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="2">
-           <widget class="QLineEdit" name="lineEdit_codeICMP"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_63">
-            <property name="text">
-             <string>Тип</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_65">
-            <property name="text">
-             <string>Идентификатор</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QComboBox" name="comboBox_typeICMP">
-            <item>
-             <property name="text">
-              <string>Вручную</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Эхо-запрос</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Эхо-ответ</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="lineEdit_checksumICMP"/>
-          </item>
-          <item row="10" column="0" colspan="4">
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
-            <item>
-             <spacer name="horizontalSpacer_5">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_saveICMP">
-              <property name="text">
-               <string>Сохранить ICMP</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="label_75">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="2">
-           <widget class="QPlainTextEdit" name="plainTextEdit_dataICMP"/>
-          </item>
           <item row="4" column="0" colspan="4">
            <layout class="QHBoxLayout" name="horizontalLayout_13">
             <item>
@@ -969,6 +937,82 @@
             </item>
            </layout>
           </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_61">
+            <property name="text">
+             <string>Номер последовательности</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QLineEdit" name="lineEdit_seqICMP"/>
+          </item>
+          <item row="1" column="3">
+           <widget class="QComboBox" name="comboBox_typeICMP">
+            <item>
+             <property name="text">
+              <string>Вручную</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Эхо-запрос</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Эхо-ответ</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="label_74">
+            <property name="text">
+             <string>hex</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QCheckBox" name="checkBox_autoCodeICMP">
+            <property name="text">
+             <string>Авто</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_73">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </widget>
        </widget>
@@ -981,121 +1025,33 @@
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>561</width>
-           <height>751</height>
+           <width>631</width>
+           <height>811</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_FieldsIP">
-          <item row="4" column="2">
-           <widget class="QLineEdit" name="lineEdit_IHL"/>
-          </item>
-          <item row="15" column="0">
-           <widget class="QLabel" name="label_30">
-            <property name="text">
-             <string>Данные</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-            </property>
-           </widget>
-          </item>
-          <item row="15" column="3">
-           <layout class="QVBoxLayout" name="verticalLayout">
+          <item row="11" column="3">
+           <widget class="QComboBox" name="comboBox_protocolIP">
             <item>
-             <widget class="QCheckBox" name="checkBox_autoIDataP">
-              <property name="text">
-               <string>Авто</string>
-              </property>
-             </widget>
+             <property name="text">
+              <string>Вручную</string>
+             </property>
             </item>
             <item>
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
+             <property name="text">
+              <string>TCP</string>
+             </property>
             </item>
-           </layout>
-          </item>
-          <item row="12" column="0">
-           <widget class="QLabel" name="label_44">
-            <property name="text">
-             <string>Контрольная сумма</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLabel" name="label_42">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="13" column="0">
-           <widget class="QLabel" name="label_39">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Опции</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="2">
-           <widget class="QLineEdit" name="lineEdit_protocolIP"/>
-          </item>
-          <item row="14" column="1">
-           <widget class="QLabel" name="label_50">
-            <property name="text">
-             <string>hex</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="1">
-           <widget class="QLabel" name="label_47">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_27">
-            <property name="text">
-             <string>Флаги</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="1">
-           <widget class="QLabel" name="label_51">
-            <property name="text">
-             <string>hex</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_34">
-            <property name="text">
-             <string>Идентификатор</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="3">
-           <widget class="QCheckBox" name="checkBox_autoOffsetIP">
-            <property name="text">
-             <string>Авто</string>
-            </property>
+            <item>
+             <property name="text">
+              <string>UDP</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>ICMP</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="8" column="2">
@@ -1123,6 +1079,13 @@
             </item>
            </layout>
           </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_41">
+            <property name="text">
+             <string>Общая длина</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_31">
             <property name="text">
@@ -1130,25 +1093,25 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="3">
-           <widget class="QComboBox" name="comboBox_versionIP">
-            <item>
-             <property name="text">
-              <string>Вручную</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>IPv4</string>
-             </property>
-            </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_33">
+            <property name="text">
+             <string>Длина IP-заголовка</string>
+            </property>
            </widget>
           </item>
-          <item row="7" column="2">
-           <widget class="QLineEdit" name="lineEdit_identificationIP"/>
+          <item row="9" column="2">
+           <widget class="QLineEdit" name="lineEdit_fragmentOffsetIP"/>
           </item>
-          <item row="10" column="2">
-           <widget class="QLineEdit" name="lineEdit_timeToLiveIP"/>
+          <item row="1" column="2">
+           <widget class="QLineEdit" name="lineEdit_srcAddrIP"/>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_38">
+            <property name="text">
+             <string>Время жизни</string>
+            </property>
+           </widget>
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="label_28">
@@ -1160,14 +1123,95 @@
           <item row="12" column="2">
            <widget class="QLineEdit" name="lineEdit_checksumIP"/>
           </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="label_38">
+          <item row="10" column="1">
+           <widget class="QLabel" name="label_47">
             <property name="text">
-             <string>Время жизни</string>
+             <string>dec</string>
             </property>
            </widget>
           </item>
-          <item row="16" column="0" colspan="4">
+          <item row="11" column="2">
+           <widget class="QLineEdit" name="lineEdit_protocolIP"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="label_59">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="lineEdit_versionIP"/>
+          </item>
+          <item row="9" column="1">
+           <widget class="QLabel" name="label_46">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0">
+           <widget class="QLabel" name="label_44">
+            <property name="text">
+             <string>Контрольная сумма</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_35">
+            <property name="text">
+             <string>IP-адрес назначения</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="3">
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QCheckBox" name="checkBox_autoIDataP">
+              <property name="text">
+               <string>Авто</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_29">
+            <property name="text">
+             <string>Тип сервиса</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLineEdit" name="lineEdit_identificationIP"/>
+          </item>
+          <item row="6" column="3">
+           <widget class="QCheckBox" name="checkBox_autoTotalLengthIP">
+            <property name="text">
+             <string>Авто</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QLineEdit" name="lineEdit_totalLengthIP"/>
+          </item>
+          <item row="10" column="2">
+           <widget class="QLineEdit" name="lineEdit_timeToLiveIP"/>
+          </item>
+          <item row="15" column="0" colspan="4">
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
              <spacer name="horizontalSpacer_3">
@@ -1191,48 +1235,8 @@
             </item>
            </layout>
           </item>
-          <item row="5" column="2">
-           <widget class="QLineEdit" name="lineEdit_DSCP"/>
-          </item>
-          <item row="17" column="2" colspan="2">
-           <layout class="QHBoxLayout" name="horizontalLayout_3"/>
-          </item>
-          <item row="6" column="2">
-           <widget class="QLineEdit" name="lineEdit_totalLengthIP"/>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_41">
-            <property name="text">
-             <string>Общая длина</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="3">
-           <widget class="QCheckBox" name="checkBox_autoTotalLengthIP">
-            <property name="text">
-             <string>Авто</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLineEdit" name="lineEdit_srcAddrIP"/>
-          </item>
-          <item row="13" column="1">
-           <widget class="QLabel" name="label_49">
-            <property name="text">
-             <string>hex</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="label_40">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="lineEdit_IHL"/>
           </item>
           <item row="7" column="1">
            <widget class="QLabel" name="label_45">
@@ -1241,109 +1245,10 @@
             </property>
            </widget>
           </item>
-          <item row="11" column="0">
-           <widget class="QLabel" name="label_36">
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_34">
             <property name="text">
-             <string>Протокол</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_35">
-            <property name="text">
-             <string>IP-адрес назначения</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="2">
-           <widget class="QLineEdit" name="lineEdit_fragmentOffsetIP"/>
-          </item>
-          <item row="11" column="1">
-           <widget class="QLabel" name="label_48">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_29">
-            <property name="text">
-             <string>Тип сервиса</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="3">
-           <widget class="QComboBox" name="comboBox_protocolIP">
-            <item>
-             <property name="text">
-              <string>Вручную</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>TCP</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>UDP</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>ICMP</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="14" column="0">
-           <widget class="QLabel" name="label_32">
-            <property name="text">
-             <string>Заполнение</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="1">
-           <widget class="QLabel" name="label_46">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="15" column="2">
-           <widget class="QPlainTextEdit" name="plainTextEdit_dataIP"/>
-          </item>
-          <item row="4" column="3">
-           <widget class="QCheckBox" name="checkBox_autoIHL">
-            <property name="text">
-             <string>Авто</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_59">
-            <property name="text">
-             <string>dec</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="label_37">
-            <property name="text">
-             <string>Смещение фрагмента</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="lineEdit_versionIP"/>
-          </item>
-          <item row="13" column="2">
-           <widget class="QPlainTextEdit" name="plainTextEdit_optionsIP"/>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_33">
-            <property name="text">
-             <string>Длина IP-заголовка</string>
+             <string>Идентификатор</string>
             </property>
            </widget>
           </item>
@@ -1354,8 +1259,100 @@
             </property>
            </widget>
           </item>
-          <item row="14" column="2">
-           <widget class="QLineEdit" name="lineEdit_paddingIP"/>
+          <item row="6" column="1">
+           <widget class="QLabel" name="label_42">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="0">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>Данные</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_36">
+            <property name="text">
+             <string>Протокол</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QComboBox" name="comboBox_versionIP">
+            <item>
+             <property name="text">
+              <string>Вручную</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>IPv4</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="9" column="3">
+           <widget class="QCheckBox" name="checkBox_autoOffsetIP">
+            <property name="text">
+             <string>Авто</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QCheckBox" name="checkBox_autoIHL">
+            <property name="text">
+             <string>Авто</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="lineEdit_dstAddrIP"/>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_27">
+            <property name="text">
+             <string>Флаги</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="label_39">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Опции</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="QLabel" name="label_48">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLineEdit" name="lineEdit_DSCP"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLabel" name="label_40">
+            <property name="text">
+             <string>dec</string>
+            </property>
+           </widget>
           </item>
           <item row="4" column="1">
            <widget class="QLabel" name="label_43">
@@ -1364,15 +1361,56 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
-           <widget class="QLineEdit" name="lineEdit_dstAddrIP"/>
-          </item>
-          <item row="14" column="3">
-           <widget class="QCheckBox" name="checkBox_autoPaddingIP">
-            <property name="text">
-             <string>Авто</string>
+          <item row="14" column="2">
+           <widget class="QPlainTextEdit" name="plainTextEdit_dataIP">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
            </widget>
+          </item>
+          <item row="12" column="1">
+           <widget class="QLabel" name="label_51">
+            <property name="text">
+             <string>hex</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_37">
+            <property name="text">
+             <string>Смещение фрагмента</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="2">
+           <widget class="QPlainTextEdit" name="plainTextEdit_optionsIP"/>
+          </item>
+          <item row="13" column="1">
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QLabel" name="label_15">
+              <property name="text">
+               <string>hex</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_7">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -1386,11 +1424,24 @@
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>561</width>
-           <height>781</height>
+           <width>631</width>
+           <height>811</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_FieldsICMP_2">
+          <item row="2" column="0">
+           <spacer name="verticalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
           <item row="3" column="0" colspan="4">
            <layout class="QHBoxLayout" name="horizontalLayout_10">
             <item>
@@ -1415,19 +1466,6 @@
             </item>
            </layout>
           </item>
-          <item row="1" column="2">
-           <widget class="QLineEdit" name="lineEdit_etherType"/>
-          </item>
-          <item row="4" column="2" colspan="2">
-           <layout class="QHBoxLayout" name="horizontalLayout_11"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_68">
-            <property name="text">
-             <string>EtherType</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
            <widget class="QLabel" name="label_81">
             <property name="text">
@@ -1435,18 +1473,12 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <spacer name="verticalSpacer_8">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_68">
+            <property name="text">
+             <string>EtherType</string>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
           <item row="1" column="3">
            <widget class="QComboBox" name="comboBox_etherType">
@@ -1462,13 +1494,13 @@
             </item>
            </widget>
           </item>
+          <item row="1" column="2">
+           <widget class="QLineEdit" name="lineEdit_etherType"/>
+          </item>
          </layout>
         </widget>
        </widget>
       </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_5"/>
      </item>
     </layout>
    </widget>
@@ -1478,7 +1510,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1837</width>
+     <width>1478</width>
      <height>26</height>
     </rect>
    </property>

@@ -48,12 +48,12 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
-        self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeToContents)
-        self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeToContents)
-        self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(4, QHeaderView.ResizeToContents)
-        self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(5, QHeaderView.ResizeToContents)
+
+        for i in range (0, self.ui.tableWidget_PacketsQueue.columnCount()):
+            self.ui.tableWidget_PacketsQueue.horizontalHeader().setSectionResizeMode(i, QHeaderView.ResizeToContents)
+        for i in range (0, 2):
+            self.ui.tableWidget_optionsIP .horizontalHeader().setSectionResizeMode(i, QHeaderView.ResizeToContents)
+            self.ui.tableWidget_optionsTCP.horizontalHeader().setSectionResizeMode(i, QHeaderView.ResizeToContents)
 
         self.backend = backendClass()
         self.dialogInterface = DialogWindow(self.backend)
@@ -62,6 +62,11 @@ class MainWindow(QMainWindow):
         self.ui.actionSetInterface.triggered.connect(self.showInterfaceDialog)
         self.ui.pushButton_addPacket.clicked.connect(self.addPacket)
         self.ui.tableWidget_PacketsQueue.cellDoubleClicked.connect(self.selectPacket)
+
+        self.ui.pushButton_deleteOptionIP .clicked.connect(self.removeOptionRowIP)
+        self.ui.pushButton_deleteOptionTCP.clicked.connect(self.removeOptionRowTCP)
+        self.ui.pushButton_addOptionIP    .clicked.connect(self.addOptionRowIP)
+        self.ui.pushButton_addOptionTCP   .clicked.connect(self.addOptionRowTCP)
 
         #TCP
         self.ui.pushButton_saveTCP.clicked.connect(self.saveTCP)
@@ -82,7 +87,30 @@ class MainWindow(QMainWindow):
         self.ui.tableWidget_PacketsQueue.insertRow(self.backend.getNumberOfPackets())
     # ^^^ addPacket ^^^
 
+    def addOptionRowIP(self):
+        self.ui.tableWidget_optionsIP.insertRow(0)
+    # ^^^ addOptionRowIP ^^^
+    def addOptionRowTCP(self):
+        self.ui.tableWidget_optionsTCP.insertRow(0)
+    # ^^^ addOptionRowTCP ^^^
+    def removeOptionRowIP(self):
+        self.ui.tableWidget_optionsIP.removeRow(0)
+    # ^^^ deleteOptionRowIP ^^^
+    def removeOptionRowTCP(self):
+        self.ui.tableWidget_optionsTCP.removeRow(0)
+    # ^^^ deleteOptionRowTCP ^^^
+
+    def getOptionsFromTable(self, tableWidget):
+        options = []
+        for i in range (0, tableWidget.rowCount()):
+            options.append((tableWidget.item(i, 0).text(), tableWidget.item(i, 1).text(), tableWidget.item(i, 2).text()))
+        print(options)
+        return options
+    # ^^^ getOptionsFromTable ^^^
+
     def saveTCP(self):
+        options = self.getOptionsFromTable(self.ui.tableWidget_optionsTCP)
+
         if self.ui.checkBox_autoDataOffsetTCP.isChecked():
             offset = None
         else:
@@ -115,7 +143,8 @@ class MainWindow(QMainWindow):
                 self.ui.lineEdit_windowSizeTCP.text(),
                 checksum,
                 self.ui.lineEdit_urgentPointerTCP.text(),
-                self.ui.plainTextEdit_optionsTCP.toPlainText(),
+                #self.ui.plainTextEdit_optionsTCP.toPlainText(),
+                options, #TODO options
                 self.ui.plainTextEdit_dataTCP.toPlainText(),
                 None
                     if self.ui.tableWidget_PacketsQueue.currentRow() == self.backend.getNumberOfPackets()
@@ -213,15 +242,10 @@ class MainWindow(QMainWindow):
         else:
             offset = self.ui.lineEdit_fragmentOffsetIP.text()
 
-        if self.ui.checkBox_autoPaddingIP.isChecked():
-            padding = ''
-        else:
-            padding = self.ui.lineEdit_paddingIP.text()
-
         if self.ui.checkBox_autoIDataP.isChecked():
             payload = ''
         else:
-            payload = self.ui.lineEdit_dataIP.text()
+            payload = self.ui.plainTextEdit_dataIP.toPlainText()
 
         try:
             if self.ui.comboBox_versionIP.currentIndex() == 0: # manual
@@ -257,8 +281,7 @@ class MainWindow(QMainWindow):
                 checksum,
                 self.ui.lineEdit_srcAddrIP.text(),
                 self.ui.lineEdit_dstAddrIP.text(),
-                self.ui.plainTextEdit_optionsIP.toPlainText(),
-                padding,
+                None, # TODO
                 payload,
                 self.ui.tableWidget_PacketsQueue.currentRow()
                 #None if self.ui.tableWidget_PacketsQueue.currentRow() == self.backend.getNumberOfPackets()
@@ -303,7 +326,7 @@ class MainWindow(QMainWindow):
         index = self.ui.tableWidget_PacketsQueue.currentRow()
         packet = self.backend.listPackets[index].construct()
         print('draw ind: ' + str(index))
-        print(str(packet))
+        #print(str(packet))
         self.ui.tableWidget_PacketsQueue.setItem(index, 0, QTableWidgetItem(str(self.backend.getType     (packet)))) # type
         self.ui.tableWidget_PacketsQueue.setItem(index, 1, QTableWidgetItem(str(self.backend.getSrcAddr  (packet)))) # source address
         self.ui.tableWidget_PacketsQueue.setItem(index, 2, QTableWidgetItem(str(self.backend.getDstAddr  (packet)))) # remote address
