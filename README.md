@@ -2,5 +2,5 @@
 
 
 <b>
-Doesn't work for now
+v0.1 - basic functionality
 </b>
