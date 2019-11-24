@@ -100,7 +100,10 @@ class MainWindow(QMainWindow):
     def getOptionsFromTable(self, tableWidget):
         options = []
         for i in range (0, tableWidget.rowCount()):
-            options.append((tableWidget.item(i, 0).text(), tableWidget.item(i, 1).text(), tableWidget.item(i, 2).text()))
+            elt0= tableWidget.item(i, 0).text() if tableWidget.item(i, 0) else None
+            elt1= tableWidget.item(i, 1).text() if tableWidget.item(i, 1) else None
+            elt2= tableWidget.item(i, 2).text() if tableWidget.item(i, 2) else None
+            options.append( (elt0, elt1, elt2) )
         print(options)
         return options
     # ^^^ getOptionsFromTable ^^^

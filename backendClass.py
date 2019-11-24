@@ -38,38 +38,40 @@ class packetClass:
     def construct(self):
         try:
             print('enter construct')
-            if self.underLayer['packetType'] == 'TCP':
-                print('    TCP')
-                packetUnder = TCP(
-                    sport=    self.underLayer['sport'],
-                    dport=    self.underLayer['dport'],
-                    seq=      self.underLayer['seq'],
-                    ack=      self.underLayer['ack'],
-                    dataofs=  self.underLayer['dataofs'],
-                    reserved= self.underLayer['reserved'],
-                    flags=    self.underLayer['flags'],
-                    window=   self.underLayer['window'],
-                    chksum=   self.underLayer['chksum'],
-                    urgptr=   self.underLayer['urgptr'],
-                    options=  self.underLayer['options']
-                )
-            elif self.underLayer['packetType'] == 'UDP':
-                print('    UDP')
-                packetUnder = UDP(
-                    sport=  self.underLayer['sport'],
-                    dport=  self.underLayer['dport'],
-                    len=    self.underLayer['len'],
-                    chksum= self.underLayer['chksum']
-                )
-            elif self.underLayer['packetType'] == 'ICMP':
-                print('    ICMP')
-                packetUnder = ICMP(
-                    type=   self.underLayer['type'],
-                    code=   self.underLayer['code'],
-                    chksum= self.underLayer['chksum'],
-                    id=     self.underLayer['id'],
-                    seq=    self.underLayer['seq']
-                )
+            if self.underLayer != None:
+                print(self.underLayer)
+                if self.underLayer['packetType'] == 'TCP':
+                    print('    TCP')
+                    packetUnder = TCP(
+                        sport=    self.underLayer['sport'],
+                        dport=    self.underLayer['dport'],
+                        seq=      self.underLayer['seq'],
+                        ack=      self.underLayer['ack'],
+                        dataofs=  self.underLayer['dataofs'],
+                        reserved= self.underLayer['reserved'],
+                        flags=    self.underLayer['flags'],
+                        window=   self.underLayer['window'],
+                        chksum=   self.underLayer['chksum'],
+                        urgptr=   self.underLayer['urgptr'],
+                        options=  self.underLayer['options']
+                    )
+                elif self.underLayer['packetType'] == 'UDP':
+                    print('    UDP')
+                    packetUnder = UDP(
+                        sport=  self.underLayer['sport'],
+                        dport=  self.underLayer['dport'],
+                        len=    self.underLayer['len'],
+                        chksum= self.underLayer['chksum']
+                    )
+                elif self.underLayer['packetType'] == 'ICMP':
+                    print('    ICMP')
+                    packetUnder = ICMP(
+                        type=   self.underLayer['type'],
+                        code=   self.underLayer['code'],
+                        chksum= self.underLayer['chksum'],
+                        id=     self.underLayer['id'],
+                        seq=    self.underLayer['seq']
+                    )
             else:
                 print('    None')
                 packetUnder = None
@@ -78,6 +80,7 @@ class packetClass:
 
             if self.layerIP != None:
                 print('    IP')
+                print(self.layerIP)
                 packetIP = IP(
                     version= self.layerIP['version'],
                     ihl=     self.layerIP['ihl'],
@@ -116,29 +119,17 @@ class packetClass:
             raise MyPacketError('Ошибка при конструировании пакета.')
             return None
 
-        constructed = packetEther / packetIP / packetUnder
+        if not self.flagDataIP:
+            if self.underLayer['data'] != None:
+                constructed = packetEther / packetIP / packetUnder / self.underLayer['data']
+            else:
+                constructed = packetEther / packetIP / packetUnder
+        else:
+            constructed = packetEther / packetIP / self.layerIP['data']
+
+        print('constructed: ' + str(constructed))
+
         return constructed
-
-
-        #if self.layerIP == None:
-        #    if self.underLayer == None:
-        #        print('Empty packet')
-        #        return None
-        #    else:
-        #        print('No IP header')
-        #        if self.etherType == None:
-        #            print('No EtherType')
-        #        return self.underLayer
-        #else:
-        #    print(str(self.underLayer))
-        #    if self.underLayer == None:
-        #        print('No transport layer')
-        #        if self.etherType == None:
-        #            print('No EtherType')
-        #        return self.layerIP
-        #    else:
-        #        return self.layerIP / self.underLayer
-
     # ^^^ construct ^^^
 # ^^^ class packetClass ^^^
 
@@ -500,6 +491,7 @@ class backendClass:
             print("checksum: " + str(N_checksum))
             print("src:      " + str(srcAddr))
             print("dst:      " + str(dstAddr))
+            print("dst:      " + str(options))
 
 
             #construct packet
@@ -532,8 +524,7 @@ class backendClass:
                 chksum=     N_checksum,
                 src=        srcAddr,
                 dst=        dstAddr,
-                options=    IPOption(options),
-                #packetType= 'IP',
+                options=    IPOption(options) if options != '' else [],
                 data=       Raw(load=data) if data != '' else None)
 
             #if data != '':
@@ -669,13 +660,9 @@ class backendClass:
             #    ',type='     + str(item.etherType                ) + ')')
 
             interfaceName = self.currentInterface.interface.get('name')
-            print('ifname: ' + interfaceName)
-            #print('packet: ' + str(ls(toSend)))
-            #print(str(toSend))
             errCntr = 0
             try:
-                toSend = item.construct()
-                sendp(toSend, iface=interfaceName, count=1)
+                sendp(item.construct(), iface=interfaceName, count=1)
                 print("success")
             except:
                 print("error")
