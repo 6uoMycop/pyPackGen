@@ -37,11 +37,8 @@ class packetClass:
 
     def construct(self):
         try:
-            print('enter construct')
             if self.underLayer != None:
-                print(self.underLayer)
                 if self.underLayer['packetType'] == 'TCP':
-                    print('    TCP')
                     packetUnder = TCP(
                         sport=    self.underLayer['sport'],
                         dport=    self.underLayer['dport'],
@@ -56,7 +53,6 @@ class packetClass:
                         options=  self.underLayer['options']
                     )
                 elif self.underLayer['packetType'] == 'UDP':
-                    print('    UDP')
                     packetUnder = UDP(
                         sport=  self.underLayer['sport'],
                         dport=  self.underLayer['dport'],
@@ -64,7 +60,6 @@ class packetClass:
                         chksum= self.underLayer['chksum']
                     )
                 elif self.underLayer['packetType'] == 'ICMP':
-                    print('    ICMP')
                     packetUnder = ICMP(
                         type=   self.underLayer['type'],
                         code=   self.underLayer['code'],
@@ -73,14 +68,9 @@ class packetClass:
                         seq=    self.underLayer['seq']
                     )
             else:
-                print('    None')
                 packetUnder = None
 
-            print(str(packetUnder))
-
             if self.layerIP != None:
-                print('    IP')
-                print(self.layerIP)
                 packetIP = IP(
                     version= self.layerIP['version'],
                     ihl=     self.layerIP['ihl'],
@@ -96,11 +86,7 @@ class packetClass:
                     dst=     self.layerIP['dst'],
                     options= self.layerIP['options']
                 )
-                print(str(packetIP))
 
-                print(self.layerIP['src'])
-                print(self.layerIP['dst'])
-                print(self.etherType)
                 packetEther = Ether(
                     src=  get_mac_address(ip=self.layerIP['src']),
                     dst=  get_mac_address(ip=self.layerIP['dst']),
@@ -110,10 +96,6 @@ class packetClass:
                 packetEther = Ether(
                     type=self.etherType
                 )
-
-
-            print('    Ether')
-            print(str(packetEther))
 
         except:
             raise MyPacketError('Ошибка при конструировании пакета.')
@@ -126,9 +108,6 @@ class packetClass:
                 constructed = packetEther / packetIP / packetUnder
         else:
             constructed = packetEther / packetIP / self.layerIP['data']
-
-        print('constructed: ' + str(constructed))
-
         return constructed
     # ^^^ construct ^^^
 # ^^^ class packetClass ^^^
@@ -165,24 +144,6 @@ class backendClass:
         data,
         index=None
     ):
-        print("src:      " + str(srcPort))
-        print("dst:      " + str(dstPort))
-        print("seq:      " + str(seqNum))
-        print("ack:      " + str(ackNum))
-        print("offset:   " + str(offset))
-        print("reserved: " + str(reserved))
-        print("urg:      " + str(urg))
-        print("ack:      " + str(ack))
-        print("psh:      " + str(psh))
-        print("rst:      " + str(rst))
-        print("syn:      " + str(syn))
-        print("fin:      " + str(fin))
-        print("window:   " + str(window))
-        print("checksum: " + str(checksum))
-        print("urg ptr:  " + str(urgPtr))
-        print("options:  " + str(options))
-        print("data:     " + str(data))
-
         N_options = []
         for item in options:
             if item[0] == 'EOL' or item[0] == 'NOP' or item[0] == 'SAckOK' or item[0] == 'AltChkSumOpt':
@@ -202,7 +163,6 @@ class backendClass:
         N_flagsTCP += 0b00000010 if syn else 0
         N_flagsTCP += 0b00000001 if fin else 0
 
-        print("flags:    " + str(bin(N_flagsTCP)))
         try:
             # check if input is valid
             if srcPort == '':
@@ -239,24 +199,6 @@ class backendClass:
 
             N_urgPtr = int(urgPtr, 16)
 
-            #if options == '':
-            #    N_options = []
-            #else:
-            #    N_options = int(options, 16) ### AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-            #packet = TCP(
-            #    sport=    int(srcPort),
-            #    dport=    int(dstPort),
-            #    seq=      int(seqNum),
-            #    ack=      int(ackNum),
-            #    dataofs=  N_offset,
-            #    reserved= N_reserved,
-            #    flags=    N_flagsTCP,
-            #    window=   int(window),
-            #    chksum=   N_checksum,
-            #    urgptr=   N_urgPtr,
-            #    options=  N_options)
-
             packet = dict(
                 sport=      int(srcPort),
                 dport=      int(dstPort),
@@ -271,8 +213,6 @@ class backendClass:
                 options=    N_options,
                 packetType= 'TCP',
                 data=       data if data != '' else None)
-            #if data != '':
-            #    packet = packet / data
         except:
             raise MyPacketError('Ошибка при создании пакета.')
             return None
@@ -295,12 +235,6 @@ class backendClass:
         data,
         index=None
     ):
-        print("src:      " + str(srcPort))
-        print("dst:      " + str(dstPort))
-        print("len:      " + str(datagramLength))
-        print("checksum: " + str(checksum))
-        print("data:     " + str(data))
-
         try:
             # check if input is valid
             if srcPort == '':
@@ -319,12 +253,6 @@ class backendClass:
             else:
                 N_checksum = int(checksum, 16)
 
-            #construct packet
-            #packet = UDP(
-            #    sport=  int(srcPort),
-            #    dport=  int(dstPort),
-            #    len=    N_datagramLength,
-            #    chksum= N_checksum)
             packet = dict(
                 sport=      int(srcPort),
                 dport=      int(dstPort),
@@ -332,14 +260,12 @@ class backendClass:
                 chksum=     N_checksum,
                 packetType= 'UDP',
                 data=       data if data != '' else None)
-            #if data != '':
-            #    packet = packet / data
+
         except:
             raise MyPacketError('Ошибка при создании пакета.')
             return None
 
         #add to list
-        print(str(index))
         if index == None or index >= len(self.listPackets):
             self.listPackets.append(packetClass(under=packet))
         elif not self.listPackets[index].flagDataIP:
@@ -358,13 +284,6 @@ class backendClass:
         data,
         index=None
     ):
-        print("type:       " + str(type))
-        print("code:       " + str(code))
-        print("checksum:   " + str(checksum))
-        print("identifier: " + str(identifier))
-        print("seq:        " + str(seq))
-        print("data:       " + str(data))
-
         try:
             # check if input is valid
             if code == '':
@@ -380,13 +299,6 @@ class backendClass:
             else:
                 N_checksum = int(checksum, 16)
 
-            #construct packet
-            #packet = ICMP(
-            #    type=   int(type),
-            #    code=   int(code),
-            #    chksum= N_checksum,
-            #    id=     int(identifier),
-            #    seq=    int(seq))
             packet = dict(
                 type=       int(type),
                 code=       int(code),
@@ -395,16 +307,7 @@ class backendClass:
                 seq=        int(seq),
                 packetType= 'ICMP',
                 data=       data if data != '' else None)
-            #if data != '':
-            #    packet = packet / data
 
-            print(
-                'ICMP(type=' + str(type)       +
-                ',code='     + str(code)       +
-                ',chksum='   + str(N_checksum) +
-                ',id='       + str(identifier) +
-                ',seq='      + str(seq)        + ')' +
-                ' / data')
         except:
             raise MyPacketError('Ошибка при создании пакета.')
             return None
@@ -479,38 +382,6 @@ class backendClass:
             else:
                 N_fragmentOffset = int(fragmentOffset)
 
-            print("ver:      " + str(version))
-            print("ihl:      " + str(N_IHL))
-            print("tos:      " + str(DSCP))
-            print("len:      " + str(N_length))
-            print("id:       " + str(ID))
-            print("flags:    " + str(N_flags))
-            print("offset:   " + str(N_fragmentOffset))
-            print("ttl:      " + str(TTL))
-            print("protocol: " + str(protocol))
-            print("checksum: " + str(N_checksum))
-            print("src:      " + str(srcAddr))
-            print("dst:      " + str(dstAddr))
-            print("dst:      " + str(options))
-
-
-            #construct packet
-            #packet = IP(
-            #    version= int(version),
-            #    ihl=     N_IHL,
-            #    tos=     int(DSCP),
-            #    len=     N_length,
-            #    id=      int(ID),
-            #    flags=   N_flags,
-            #    frag=    N_fragmentOffset,
-            #    ttl=     int(TTL),
-            #    proto=   protocol,
-            #    chksum=  N_checksum,
-            #    src=     srcAddr,
-            #    dst=     dstAddr,
-            #    options= IPOption(options)
-            #)
-
             packet = dict(
                 version=    int(version),
                 ihl=        N_IHL,
@@ -527,31 +398,11 @@ class backendClass:
                 options=    IPOption(options) if options != '' else [],
                 data=       Raw(load=data) if data != '' else None)
 
-            #if data != '':
-            #    packet = packet / Raw(load=data)
-
-            print(
-                'IP(version='        + str(version         ) +
-                ',ihl='              + str(N_IHL           ) +
-                ',tos='              + str(DSCP            ) +
-                ',len='              + str(N_length        ) +
-                ',id='               + str(ID              ) +
-                ',flags='            + str(N_flags         ) +
-                ',frag='             + str(N_fragmentOffset) +
-                ',ttl='              + str(TTL             ) +
-                ',proto='            + str(protocol        ) +
-                ',chksum='           + str(N_checksum      ) +
-                ',src='              + str(srcAddr         ) +
-                ',dst='              + str(dstAddr         ) +
-                ',options=IPOption(' + str(options         ) + ')' +
-                ' / raw(load=data)')
-
         except MyPacketError as e:
             raise MyPacketError('Ошибка при создании пакета.')
             return None
 
         #add to list
-        print(str(index))
         if index == None or index >= len(self.listPackets):
             self.listPackets.append(packetClass(flag= True if data != '' else False, ip=packet))
         else:
@@ -568,10 +419,8 @@ class backendClass:
         else:
             N_etherType = int(etherType, 16)
 
-        print('--->    EtherType: ' + str(N_etherType))
 
         #add to list
-        print(str(index))
         if index == None or index >= len(self.listPackets):
             self.listPackets.append(packetClass(ether=N_etherType))
         else:
@@ -601,8 +450,6 @@ class backendClass:
         if packet != None:
             if packet.layerIP != None:
                 return packet.layerIP['src']
-            else:
-                print('No IP layer')
         return None
     # ^^^ getSrcAddr ^^^
 
@@ -610,8 +457,6 @@ class backendClass:
         if packet != None:
             if packet.layerIP != None:
                 return packet.layerIP['dst']
-            else:
-                print('No IP layer')
         return None
     # ^^^ getDstAddr ^^^
 
@@ -620,8 +465,6 @@ class backendClass:
             if packet.underLayer != None:
                 if packet.underLayer['packetType'] == 'TCP' or packet.underLayer['packetType'] == 'UDP':
                     return packet.underLayer['sport']
-                else:
-                    print('No TCP or UDP layer')
         return None
     # ^^^ getSrcPort ^^^
 
@@ -630,8 +473,6 @@ class backendClass:
             if packet.underLayer != None:
                 if packet.underLayer['packetType'] == 'TCP' or packet.underLayer['packetType'] == 'UDP':
                     return packet.underLayer['dport']
-                else:
-                    print('No TCP or UDP layer')
         return None
     # ^^^ getDstPort ^^^
 
@@ -644,28 +485,17 @@ class backendClass:
     def sendAll(self, statusbar, delete):
         try:
             if self.currentInterface.index == -1:
-                print(self.currentInterface.index)
-                print(self.currentInterface.interface)
                 raise MyPacketError('Не выбран сетевой интерфейс. Выберите интерфейс: Инструменты -> Настройка интерфейсов')
         except MyPacketError as e:
             statusbar.showMessage('Внимание! Пакеты не отправлены. ' + e.message)
             return -1
 
         for item in self.listPackets:
-            #toSend = Ether(src=self.autoMAC(item.layerIP.src), dst=self.autoMAC(item.layerIP.dst), type=item.etherType) / item.construct()
-
-            #print(
-            #    'Ether(src=' + str(self.autoMAC(item.layerIP.src)) +
-            #    ',dst='      + str(self.autoMAC(item.layerIP.dst)) +
-            #    ',type='     + str(item.etherType                ) + ')')
-
             interfaceName = self.currentInterface.interface.get('name')
             errCntr = 0
             try:
                 sendp(item.construct(), iface=interfaceName, count=1)
-                print("success")
             except:
-                print("error")
                 statusbar.showMessage('Внимание! Произошла ошибка при отправке.')
                 errCntr += 1
                 continue

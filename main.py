@@ -27,7 +27,6 @@ class DialogWindow(QtWidgets.QDialog):
     def saveExit(self):
         self.setResult(self.ui.comboBox_interfaces.currentIndex())
         self.backend.currentInterface.index     = self.ui.comboBox_interfaces.currentIndex()
-        print(': ' + str(self.backend.currentInterface.index))
         if self.backend.currentInterface.index == -1:
             self.ui.label_currentInterface.setText("Не выбран")
         else:
@@ -104,7 +103,6 @@ class MainWindow(QMainWindow):
             elt1= tableWidget.item(i, 1).text() if tableWidget.item(i, 1) else None
             elt2= tableWidget.item(i, 2).text() if tableWidget.item(i, 2) else None
             options.append( (elt0, elt1, elt2) )
-        print(options)
         return options
     # ^^^ getOptionsFromTable ^^^
 
@@ -297,8 +295,6 @@ class MainWindow(QMainWindow):
             newPacket = self.backend.createEthernet(
                 etherType,
                 self.ui.tableWidget_PacketsQueue.currentRow()
-                #None if self.ui.tableWidget_PacketsQueue.currentRow() == self.backend.getNumberOfPackets()
-                #    else self.ui.tableWidget_PacketsQueue.currentRow()
             )
             self.drawPacketInQueue()
         except MyPacketError as e:
@@ -318,8 +314,6 @@ class MainWindow(QMainWindow):
     def drawPacketInQueue(self):
         index = self.ui.tableWidget_PacketsQueue.currentRow()
         packet = self.backend.listPackets[index]
-        print('draw ind: ' + str(index))
-        #print(str(packet))
         self.ui.tableWidget_PacketsQueue.setItem(index, 0, QTableWidgetItem(str(self.backend.getType     (packet)))) # type
         self.ui.tableWidget_PacketsQueue.setItem(index, 1, QTableWidgetItem(str(self.backend.getSrcAddr  (packet)))) # source address
         self.ui.tableWidget_PacketsQueue.setItem(index, 2, QTableWidgetItem(str(self.backend.getDstAddr  (packet)))) # remote address
