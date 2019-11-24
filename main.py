@@ -314,7 +314,7 @@ class MainWindow(QMainWindow):
 
     def drawPacketInQueue(self):
         index = self.ui.tableWidget_PacketsQueue.currentRow()
-        packet = self.backend.listPackets[index].construct()
+        packet = self.backend.listPackets[index]
         print('draw ind: ' + str(index))
         #print(str(packet))
         self.ui.tableWidget_PacketsQueue.setItem(index, 0, QTableWidgetItem(str(self.backend.getType     (packet)))) # type
